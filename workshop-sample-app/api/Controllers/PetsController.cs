@@ -1,6 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using api.Models
+using api.Models;
 
 namespace api.Controllers
 {
@@ -12,8 +12,8 @@ namespace api.Controllers
         [HttpGet("pet")]
         public Image Get()
         {
-            var index = rnd.Next(0, Images.Count);
-            return Images.Get(index);
+            var id = rnd.Next(1, Images.Count+1);
+            return Images.Get(id);
         }
     }
 }

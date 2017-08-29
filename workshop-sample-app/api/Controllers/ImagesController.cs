@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using api.Models;
 
 namespace api.Controllers
 {
@@ -8,15 +9,15 @@ namespace api.Controllers
     public class ImagesController : Controller
     {
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Image> Get()
         {
             return Images.All();
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Image Get(int id)
         {
-            return ImagesController.Get(id);
+            return Images.Get(id);
         }
     }
 }

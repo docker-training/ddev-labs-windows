@@ -1,7 +1,9 @@
 using System;
-using api.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace api.Models{
+namespace api.Models
+{
     public static class Images{
         private static List<Image> _images = new List<Image>{
             new Image{Id=1, Name="cat"},
@@ -11,11 +13,11 @@ namespace api.Models{
 
         public static int Count{get{return _images.Count;}}
 
-        public List<Image> All(){
+        public static List<Image> All(){
             return _images;
         }
         public static Image Get(int id){
-            return _images.Single(x.Id == id);
+            return _images.Single(x => x.Id == id);
         }
     }
 }
