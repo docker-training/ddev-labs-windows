@@ -31,3 +31,19 @@ Each service runs in its own container.
   PS> $ip = docker inspect  --format '{{ .NetworkSettings.Networks.nat.IPAddress }}' workshopsampleapp_ui_1
   PS> start "http://${ip}:3000/pet"
   ```
+
+  you should see a cat GIF.
+  
+4. Refresh the browser a few times to see other funny GIFs.
+
+5. Also try the API directly using `Invoke-WebRequest` or `curl`, e.g.:
+
+  ```
+  PS> $ip = docker inspect  --format '{{ .NetworkSettings.Networks.nat.IPAddress }}' workshopsampleapp_api_1
+  PS> (iwr "http://$ip:5000/api/pet").content
+  PS> # or  
+  PS> (iwr "http://$ip:5000/api/images").content
+  PS> # or
+  PS> (iwr "http://$ip:5000/api/images/5").content
+  ```
+  
