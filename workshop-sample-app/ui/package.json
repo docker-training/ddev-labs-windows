@@ -1,0 +1,12 @@
+{
+    "name": "pets-windows",
+    "author": "Gabriel N. Schenker",
+    "scripts": {
+        "start": "node src/server.js"
+    },
+    "dependencies": {
+        "express": "^4.14.1",
+        "mustache-express": "^1.2.4",
+        "request": "^2.81.0"
+    }
+}

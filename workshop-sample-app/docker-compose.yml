@@ -1,0 +1,49 @@
+version: "3.3"
+
+services:
+  database:
+    build:
+      context: db
+    image: ddev_db
+    deploy:
+      endpoint_mode: dnsrr
+    environment:
+      SQL_USER: gordonuser
+      SQL_DB: ddev_db
+    networks:
+      - back-tier
+    secrets:
+      - sql_password
+
+  api:
+    build:
+      context: api
+    image: ddev_api
+    deploy:
+      endpoint_mode: dnsrr
+    ports:
+      - 8080:8080
+    networks:
+      - back-tier
+      - front-tier
+    secrets:
+      - sql_password
+
+  ui:
+    build:
+      context: ui
+    image: ddev_ui
+    deploy:
+      endpoint_mode: dnsrr
+    ports:
+      - 3000:3000
+    networks:
+      - front-tier
+
+secrets:
+  sql_password:
+    file: ./devsecrets/sql_password
+
+networks:
+  front-tier:
+  back-tier:
