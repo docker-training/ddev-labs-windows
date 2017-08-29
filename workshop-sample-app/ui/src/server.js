@@ -4,7 +4,7 @@ var mustacheExpress = require("mustache-express");
 var os = require("os");
 
 var app = express();
-app.set("view enging", "html");
+app.set("view engine", "html");
 app.engine("html", mustacheExpress());
 app.set("views", __dirname);
 
@@ -23,12 +23,12 @@ app.get("/pet", function(req, res){
 });
 
 var getPet = function(callback){
-    request.get("http://api:8080/api/pet", function(err, res, body){
+    request.get("http://api:5000/api/pet", function(err, res, body){
         url = JSON.parse(body).url;
         callback(url);
     });
 }
 
-app.listen93000, "0.0.0.0");
+app.listen(3000, "0.0.0.0");
 
 console.log("UI is listening at 0.0.0.0:3000");
