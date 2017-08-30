@@ -1,11 +1,11 @@
-FROM microsoft/mssql-server-2016-express-windows
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
+# escape=`
+FROM microsoft/mssql-server-windows-express
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-EXPOSE 1433
-VOLUME c:\\database
 ENV sa_password 1loop-back2
+VOLUME C:\mssql
 
-WORKDIR c:\\init
+WORKDIR C:\init
 COPY . .
 
-CMD Initialize-Database.ps1 -sa_password $env:sa_password -db_name ddev -Verbose
+CMD ./InitializeDatabase.ps1 -sa_password $env:sa_password -Verbose
