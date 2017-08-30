@@ -8,12 +8,17 @@ namespace api.Controllers
     public class PetsController : Controller
     {
         private Random rnd = new Random();
+        private ImagesRepository _repository;
+
+        public PetsController(){
+          _repository = new ImagesRepository();
+        }
 
         [HttpGet("pet")]
         public Image Get()
         {
-            var id = rnd.Next(1, Images.Count+1);
-            return Images.Get(id);
+            var id = rnd.Next(1, _repository.Count+1);
+            return _repository.GetById(id);
         }
     }
 }

@@ -8,16 +8,22 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
+        private ImagesRepository _repository;
+
+        public ImagesController(){
+          _repository = new ImagesRepository();
+        }
+
         [HttpGet]
         public IEnumerable<Image> Get()
         {
-            return Images.All();
+            return _repository.List();
         }
 
         [HttpGet("{id}")]
         public Image Get(int id)
         {
-            return Images.Get(id);
+            return _repository.GetById(id);
         }
     }
 }
