@@ -1,0 +1,46 @@
+version: "3.3"
+
+services:
+  db:
+    image: ddev_db
+    deploy:
+      endpoint_mode: dnsrr
+    environment:
+      SA_PASSWORD: 1loop-back2
+    networks:
+      - back-tier
+    secrets:
+      - sa_password
+
+  api:
+    image: ddev_api
+    deploy:
+      endpoint_mode: dnsrr
+    ports:
+      - target: 5000
+        published: 5000
+        mode: host
+    networks:
+      - back-tier
+      - front-tier
+    secrets:
+      - sa_password
+
+  ui:
+    image: ddev_ui
+    deploy:
+      endpoint_mode: dnsrr
+    ports:
+      - target: 3000
+        published: 3000
+        mode: host
+    networks:
+      - front-tier
+
+secrets:
+  sa_password:
+    file: ./devsecrets/sa_password
+
+networks:
+  front-tier:
+  back-tier:
