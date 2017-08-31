@@ -1,0 +1,12 @@
+FROM stefanscherer/node-windows:8.4.0-nano
+SHELL ["powershell"]
+ENV SOURCE_PATH="/app/src"
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY ./src ./src
+EXPOSE 3000
+# workaround for apps that don't respect symlinks such as node
+RUN Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' \
+    -Name 'G:' -Value "\??\C:\app2" -Type String;
+CMD powershell cp -r /app/node_modules g:; node G:/src/server.js"
