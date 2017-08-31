@@ -9,7 +9,7 @@ app.engine("html", mustacheExpress());
 app.set("views", __dirname);
 
 app.get("/", function(req, res){
-    res.status(200).send("Pets Demo Aplication.");
+    res.status(200).send("Pets Demo Application");
 });
 
 app.get("/pet", function(req, res){

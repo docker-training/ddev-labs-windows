@@ -1,6 +1,6 @@
 FROM stefanscherer/node-windows:8.4.0-nano
 SHELL ["powershell"]
-ENV SOURCE_PATH="/app/src"
+RUN npm install nodemon -g
 WORKDIR /app
 COPY package.json .
 RUN npm install
@@ -9,4 +9,8 @@ EXPOSE 3000
 # workaround for apps that don't respect symlinks such as node
 RUN Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' \
     -Name 'G:' -Value "\??\C:\app2" -Type String;
-CMD powershell cp -r /app/node_modules g:; node G:/src/server.js"
+
+CMD powershell cp -r /app/node_modules g:; node G:/src/server.js
+
+#CMD powershell cp -r -ErrorAction SilentlyContinue /app/node_modules g:; \
+    nodemon --watch G:/src G:/src/server.js
