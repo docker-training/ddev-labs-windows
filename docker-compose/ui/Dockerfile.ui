@@ -1,0 +1,15 @@
+FROM stefanscherer/node-windows:8.4.0-nano
+SHELL ["powershell"]
+# This is only needed during development
+# to auto-reload the app on src change
+RUN npm install -g nodemon 
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY ./src ./src
+EXPOSE 3000
+
+# workaround for apps that don't respect symlinks such as node
+RUN Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' \
+    -Name 'G:' -Value "\??\C:\app2" -Type String;
+CMD powershell cp -r -Force /app/node_modules G:/; nodemon G:/src/server.js

@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  db:
+    build: 
+      context: ./db
+    image: ddev_db
+    networks:
+      - nat
+
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile.api
+    image: ddev_api
+    volumes:
+      - ./api:c:/app2
+    ports:
+      - 5000:5000
+    networks:
+      - nat
+    environment:
+      - SA_PASSWORD=1loop-back2
+
+networks:
+  nat:
+    external: true

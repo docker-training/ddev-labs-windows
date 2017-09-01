@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  db:
+    image: gnschenker/pets-db:1.0
+    networks:
+      - nat
+
+  api:
+    image: gnschenker/pets-api:1.0
+    ports:
+      - 5000:5000
+    networks:
+      - nat
+    environment:
+      - SA_PASSWORD=1loop-back2
+
+  ui:
+    build:
+      context: ui
+      dockerfile: Dockerfile.ui
+    image: ddev_ui
+    volumes:
+      - ./ui:c:/app2
+    ports:
+      - 3000:3000
+    networks:
+      - nat
+
+networks:
+  nat:
+    external: true

@@ -1,0 +1,15 @@
+FROM microsoft/dotnet:nanoserver
+SHELL ["powershell"]
+ENV ASPNETCORE_URLS="https://*:5000"
+WORKDIR /app
+EXPOSE 5000
+
+COPY api.csproj .
+RUN dotnet restore
+COPY . .
+
+# workaround for apps that don't respect symlinks such as node
+RUN Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' \
+    -Name 'G:' -Value "\??\C:\app2" -Type String;
+WORKDIR G:/
+CMD powershell ./init.ps1 -Verbose

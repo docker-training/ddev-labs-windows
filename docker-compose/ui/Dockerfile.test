@@ -1,0 +1,13 @@
+FROM stefanscherer/node-windows:8.4.0-nano
+SHELL ["powershell"]
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY ./src ./src
+EXPOSE 3000
+
+# workaround for apps that don't respect symlinks such as node
+RUN Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\DOS Devices' \
+    -Name 'G:' -Value "\??\C:\app2" -Type String;
+WORKDIR G:/
+CMD powershell cp -r -Force c:/app/node_modules G:/; npm run test

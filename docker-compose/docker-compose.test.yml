@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+    ui:
+        build: 
+            context: ui
+            dockerfile: Dockerfile.test
+        ports:
+            - 3000:3000
+        volumes:
+            - ./ui:c:/app2
+        networks:
+            - nat
+networks:
+    nat:
+        external: true
